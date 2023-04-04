@@ -2,4 +2,4 @@
 Brief about me !!!
 
 # About me:
-My name 
+My name is Pham Duong
