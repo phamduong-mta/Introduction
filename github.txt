@@ -1,0 +1,122 @@
+ *** Hướng dẫn sử dụng Git cơ bản cho dự án *** 
+
+### ************** ###
+1. Cấu hình ban đầu
+
+- Cài đặt Git:sudo apt install git
+git --version
+
+- Cấu hình thông tin:git config --global user.name "Tên của bạn"
+git config --global user.email "email@example.com"
+
+- Thiết lập SSH key:ssh-keygen -t ed25519 -C "email@example.com"
+cat ~/.ssh/id_ed25519.pub
+ssh -T git@github.com
+
+(Copy public key và thêm vào GitHub: Settings → SSH and GPG keys).
+
+### ************** ###
+2. Khởi tạo và quản lý repository
+
+- Khởi tạo repo cục bộ:cd /đường/dẫn/đến/dự/án
+git init
+
+- Kết nối với GitHub
+git remote add origin git@github.com:username/repo-name.git
+
+- Check:
+git remote -v
+
+- Tạo .gitignore (loại bỏ file build):echo "*.o\n*.elf\n*.bin\nbuild/\n*.log" > .gitignore
+git add .gitignore
+
+- First commit
+git add README.md
+git commit -m "Create github repository for ..."
+	
+### ************** ###
+3. Làm việc với branch
+
+- Tạo nhánh main
+git branch -M main
+
+- Xem danh sách nhánh
+git branch
+
+- Tạo và chuyển sang nhánh:
+git checkout -b feature/ten-tinh-nang
+
+- Chuyển nhánh:
+git checkout main
+
+- Merge nhánh:
+git checkout main
+git merge feature/ten-tinh-nang
+
+- Xóa nhánh:
+git branch -d feature/ten-tinh-nang
+git push origin --delete feature/ten-tinh-nang
+
+### ************** ###
+4. Làm việc với commit
+
+- Kiểm tra trạng thái
+git status
+
+- Thêm file vào staging
+git add tên_file.c
+git add .  # Thêm tất cả
+
+- Tạo commit
+git commit -m "Mô tả thay đổi"
+
+- Xem lịch sử commit
+git log --oneline
+
+- Hoàn tác thay đổi chưa commit
+git restore tên_file.c
+
+Lưu tạm thay đổi:
+git stash
+git stash pop  # Lấy lại
+
+### ************** ###
+5. Đồng bộ với GitHub
+
+- Đẩy code lên GitHub
+git push origin main
+git push -u origin feature/ten-tinh-nang  # Lần đầu đẩy nhánh mới
+
+- Kéo code từ GitHub
+git pull origin main
+
+### ************** ###
+6. Quay lại phiên bản code cũ
+
+- Xem commit cần quay lại
+git log --oneline
+
+- Kiểm tra tạm thời
+git checkout <commit_id>  # Ví dụ: git checkout abc123
+git checkout main  # Quay lại nhánh chính
+
+- Hoàn tác giữ lịch sử
+git revert <commit_id>  # Ví dụ: git revert def456
+git push origin main
+
+- Xóa commit sau một điểm (cẩn thận)
+git reset --hard <commit_id>  # Ví dụ: git reset --hard abc123
+git push origin main --force
+
+- Tạo nhánh mới từ commit cũ
+git checkout <commit_id>
+git checkout -b new-branch
+git push origin new-branch
+
+### ************** ###
+7. Mẹo cho dự án nhúng
+- Commit nhỏ, thường xuyên, với thông điệp rõ ràng.
+- Luôn kiểm tra git status và git diff trước khi commit.
+- Dùng .gitignore để bỏ qua file build (.o, .elf, .bin).
+- Đẩy code lên GitHub sau mỗi buổi làm việc để đồng bộ và tránh mất dữ liệu.
+
